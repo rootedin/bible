@@ -10,7 +10,7 @@
         v-for="(abbrevs, abbrevI) in bibleAll"
         :key="abbrevI"
         color="red"
-        append-icon="mdi-chevron-down">
+        append-icon="fas fa-angle-down">
         <template v-slot:activator>
           <v-list-item-content>
             <v-list-item-title v-text="abbrevs.abbrev"></v-list-item-title>
@@ -36,7 +36,7 @@
       dense
     >
     <v-btn class="mx-1" icon @click.stop="drawer = !drawer">
-      <v-icon>mdi-menu</v-icon>
+      <v-icon>fas fa-bars</v-icon>
     </v-btn>
       
       <v-toolbar-title>
@@ -103,12 +103,13 @@
 </template>
 
 <script>
+import bibleAll from '@/assets/ko_rev.json'
 export default {
   name: "App",
   data() {
     return {
       drawer: null,
-      bibleAll: [],
+      bibleAll: bibleAll,
       oldTestament: [],
       newTestament: [],
       bibleContent: [],
@@ -129,7 +130,6 @@ export default {
     }
   },
   async created() {
-    await this.$axios.get("https://raw.githubusercontent.com/seonggn-yun/bible/master/docs/ko_rev.json").then(result => {this.bibleAll = result.data;})
     if(localStorage.abbrev && localStorage.chapter) {
       this.selectChapter(localStorage.abbrev, localStorage.chapter);
     }
