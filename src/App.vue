@@ -50,7 +50,7 @@
       <v-list-item
         v-for="(item,i) in bibleContent"
         :key="i">
-        <span >{{ (i) }} &nbsp;&nbsp; {{ item }}</span>
+        <span >{{ (i+1) }} &nbsp;&nbsp; {{ item }}</span>
       </v-list-item>
       </v-list>
       <v-card>
