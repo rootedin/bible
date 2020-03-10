@@ -119,10 +119,8 @@ export default {
   },
   methods: {
     selectChapter(abbrevI, chapterI) {
-      if(!localStorage.abbrev && !localStorage.chapter) {
-        localStorage.abbrev = abbrevI;
-        localStorage.chapter = chapterI;
-      }
+      localStorage.abbrev = abbrevI;
+      localStorage.chapter = chapterI;
       this.bibleContent = this.bibleAll[abbrevI].chapters[chapterI];
       this.selectedAbbrev = this.bibleAll[localStorage.abbrev].abbrev;
       this.selectedChapter = localStorage.chapter * 1 + 1;
@@ -130,9 +128,8 @@ export default {
       this.drawer = false;
     }
   },
-  created() {
-    this.$axios.get("/ko_rev.json", { baseURL: window.location.origin }).then(result => {this.bibleAll = result.data;})
-    
+  async created() {
+    await this.$axios.get("https://raw.githubusercontent.com/seonggn-yun/bible/master/docs/ko_rev.json").then(result => {this.bibleAll = result.data;})
     if(localStorage.abbrev && localStorage.chapter) {
       this.selectChapter(localStorage.abbrev, localStorage.chapter);
     }
