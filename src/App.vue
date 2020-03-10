@@ -46,10 +46,12 @@
     </v-app-bar>
 
     <v-content>
-      <v-list dense flat v-if="selected">
+      <v-list dense v-if="selected">
       <v-list-item
         v-for="(item,i) in bibleContent"
-        :key="i">
+        :key="i"
+        dense
+        style="min-height:24px">
         <span >{{ (i+1) }} &nbsp;&nbsp; {{ item }}</span>
       </v-list-item>
       </v-list>
