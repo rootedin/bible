@@ -10,7 +10,7 @@
         v-for="(abbrevs, abbrevI) in Bible"
         :key="abbrevI"
         color="red"
-        append-icon="mdi-chevron-down">
+        append-icon="fas fa-angle-down">
         <template v-slot:activator>
           <v-list-item-content>
             <v-list-item-title v-text="abbrevs.abbrev"></v-list-item-title>
@@ -36,7 +36,7 @@
       dense
     >
     <v-btn class="mx-1" icon @click.stop="drawer = !drawer">
-      <v-icon>mdi-menu</v-icon>
+      <v-icon>fas fa-bars</v-icon>
     </v-btn>
       
       <v-toolbar-title>
