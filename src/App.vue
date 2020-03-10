@@ -7,7 +7,7 @@
     >
     <v-list>
       <v-list-group
-        v-for="(abbrevs, abbrevI) in Bible"
+        v-for="(abbrevs, abbrevI) in bibleAll"
         :key="abbrevI"
         color="red"
         append-icon="fas fa-angle-down">
@@ -103,13 +103,12 @@
 </template>
 
 <script>
-import Bible from '@/assets/ko_rev.json'
 export default {
   name: "App",
   data() {
     return {
       drawer: null,
-      Bible: Bible,
+      bibleAll: [],
       oldTestament: [],
       newTestament: [],
       bibleContent: [],
@@ -120,21 +119,22 @@ export default {
   },
   methods: {
     selectChapter(abbrevI, chapterI) {
-      this.bibleContent = Bible[abbrevI].chapters[chapterI];
-      localStorage.abbrev = abbrevI;
-      localStorage.chapter = chapterI;
-      this.selectedAbbrev = Bible[localStorage.abbrev].abbrev;
+      if(!localStorage.abbrev && !localStorage.chapter) {
+        localStorage.abbrev = abbrevI;
+        localStorage.chapter = chapterI;
+      }
+      this.bibleContent = this.bibleAll[abbrevI].chapters[chapterI];
+      this.selectedAbbrev = this.bibleAll[localStorage.abbrev].abbrev;
       this.selectedChapter = localStorage.chapter * 1 + 1;
       this.selected = true;
       this.drawer = false;
     }
   },
   created() {
+    this.$axios.get("/ko_rev.json", { baseURL: window.location.origin }).then(result => {this.bibleAll = result.data;})
+    
     if(localStorage.abbrev && localStorage.chapter) {
-      this.bibleContent = Bible[localStorage.abbrev].chapters[localStorage.chapter];
-      this.selectedAbbrev = Bible[localStorage.abbrev].abbrev;
-      this.selectedChapter = localStorage.chapter * 1 + 1;
-      this.selected = true;
+      this.selectChapter(localStorage.abbrev, localStorage.chapter);
     }
   }
 };
